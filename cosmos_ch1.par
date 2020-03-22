@@ -1,0 +1,19 @@
+# Input config file for PRFMAP v2.0
+
+# paths to useful directories
+PATH_PRFMOD  /n07data/PRFMAP_v2/prfmod/warm/
+PATH_OUTPUT /n08data/PRFstacks/COSMOS_ch1_200130/
+
+# file names
+FILE_MOSAIC  /n07data/Spitzer/COSMOS/COSMOS.irac.1.mosaic.fits 
+FILE_FRAMELIST /n08data/PRFstacks/COSMOS_ch1_200130/bcd_ch1.lst
+FILE_PRFMOD  ch1_prfmap_x100.tbl   #path is defined in PATH_PRFMOD
+FILE_GRID TBD
+FILE_PRFS /n08data/PRFstacks/COSMOS_ch1_200130/prfmap_models_ch1.txt
+
+PRF_RAD  8   # core of the PRF (in mosaic's pixels)
+GRID_SPACE  6  # to set the distance between two nodes on the PRF map (=PRF_RAD*GRID_SPACE)
+PRF_SAMP 100  # (over-)sampling of the basic PRF models (listed in FILE_PRFMOD)
+
+RA_LIM  149.05,151.07
+DEC_LIM  1.38,3.08
