@@ -1,6 +1,6 @@
 import numpy as np
 import subprocess
-import make_grids
+import utils as utl
 
 
 def draw_grid(frame_list,opt={},verbose=False,debug=False):
@@ -24,13 +24,13 @@ def draw_grid(frame_list,opt={},verbose=False,debug=False):
 
     if verbose: print('--- Make the grid over the entire mosaic ---\n--- which is {} '.format(opt['FILE_MOSAIC']))
 
-    points = make_grids.make_grid(opt['FILE_MOSAIC'],step=opt['PRF_RAD']*opt['GRID_SPACE'],ra_lim=opt['RA_LIM'],dec_lim=opt['DEC_LIM'],write='{}/{}'.format(opt['PATH_OUTPUT'],opt['FILE_GRID']))
+    points = utl.make_grid(opt['FILE_MOSAIC'],step=opt['PRF_RAD']*opt['GRID_SPACE'],ra_lim=opt['RA_LIM'],dec_lim=opt['DEC_LIM'],write='{}/{}'.format(opt['PATH_OUTPUT'],opt['FILE_GRID']))
     ### select the grid points within each frame
     if debug:
         for f,fname in enumerate(frame_list):
             if verbose: print('------- Processing frame #{}'.format(f+1))
             #extract just the name of the frame, not the full path
-            points1 = make_grids.grid_in_frame(points,fname)
+            points1 = utl.grid_in_frame(points,fname)
             subprocess.run(['mkdir','-p','{}/frame_grids/'.format(opt['PATH_OUTPUT'])])
             points1.write('{}/{}_GRID.dat'.format(opt['PATH_OUTPUT']+'/frame_grids/',opt['NAME_FRAME'][f]),format='ascii.commented_header',formats={'ID_GRIDPT':'%8g','RA':'%12.6f','Dec':'%12.6f','X':'%12.3f','Y':'%12.3f'},overwrite=False)  
         

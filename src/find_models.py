@@ -4,7 +4,6 @@ import numpy as np
 from astropy import table 
 from astropy.io import ascii
 import utils as utl
-import make_grids
 import multiprocessing as mp
 from pathlib import Path
 
@@ -17,7 +16,7 @@ def argmin(a):
 
 #select models for single frame
 def single_frame(fname,points,coord,verbose):
-    points1 = make_grids.grid_in_frame(points,fname)
+    points1 = utl.grid_in_frame(points,fname)
     #extract just the name of the frame, not the full path
     rows = []
     for i in range(len(points1)):
@@ -35,7 +34,7 @@ def single_frame(fname,points,coord,verbose):
 def multi_frame(fnames,points,coord,verbose,queue):
     out_tmp = open(queue,'w')
     for fname in fnames:
-        points1 = make_grids.grid_in_frame(points,fname)
+        points1 = utl.grid_in_frame(points,fname)
         #extract just the name of the frame, not the full path
         for i in range(len(points1)):
             x0 = points1['X'][i]; y0 = points1['Y'][i]
