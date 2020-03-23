@@ -1,20 +1,21 @@
-# Input config file for PRFMAP v2.0
+## Input config file for PRFMap v2.0 ##
 
-# paths to useful directories
-PATH_PRFMOD  prfmod/cryo
-PATH_OUTPUT prfout_test
+### paths to useful directories
+PATH_PRFMOD  prfmod/cryo  #the directory where the basic PRF models are stored
+PATH_OUTPUT prfout_test  #the directory where the output will be saved
 
-# file names
-FILE_MOSAIC example_data/mosaic/A2744.0.irac.1.mosaic.fits
-FILE_FRAMELIST example_data/frames.lst
-FILE_PRFMOD  ch1_prfmap_x10.tbl   #path is defined in PATH_PRFMOD
-FILE_GRID TBD
-FILE_PRFS prfout_test/prfmap_models_ch1.txt
+### file names
+FILE_MOSAIC example_data/mosaic/A2744.0.irac.1.mosaic.fits   #the IRAC mosaic to be mapped
+FILE_FRAMELIST example_data/frames.lst   #frames that made the mosaic (list of *_bcd.fits file)
+FILE_PRFMOD  ch1_prfmap_x10.tbl   #table (from the IPAC website) with the carachteristics of the basic models (must be located in PATH_PRFMOD)
+FILE_GRID TBD    #grid where to evaluate the PRF (it can be created 'by hand' by the user)
+FILE_PRFS  prfout_test/prfmap_models_ch1.txt   #list of all frames associated to every grid point
 
+### PRF details
 PRF_RAD  8   # core of the PRF (in mosaic's pixels)
 GRID_SPACE  6  # to set the distance between two nodes on the PRF map (=PRF_RAD*GRID_SPACE)
-PRF_SAMP 100  # (over-)sampling of the basic PRF models (listed in FILE_PRFMOD)
+PRF_SAMP 100  # (over-)sampling of the basic PRF models listed in FILE_PRFMOD
 
 ### Facultative (comment out to activate):
-#RA_LIM  149.05,151.07
-#DEC_LIM  1.38,3.08
+#RA_LIM  149.05,151.07   #min and max RA of the grid
+#DEC_LIM  1.38,3.08    #min and max Dec of the grid
