@@ -17,6 +17,7 @@ if __name__ == '__main__':
 
     #################################
     ### GET OPTIONS from COMMAND LINE
+
     verbose = False #default value
     debug = False #default value
     prll = False #default value
@@ -32,23 +33,25 @@ if __name__ == '__main__':
             print("""
         Help message TBD
                    """)
-    if verbose and prll: print('--- multi-thread ON ---')
+    if verbose and prll: print('--- Multi-thread ON')
+
     ##################
     ### PARAMETERS ###
-    opt = read_par(paramfile)
+
+    opt = read_par(paramfile)  #get parameters from the config file
     #modify options from command line
     for a,arg in enumerate(args):  
         if arg in read_par(paramfile,list_out=True):
             opt[arg] = args[a+1]
-            if verbose: print("Option {} set to {} from command line".format(arg,args[a+1]))
-    
+            if verbose: print("--- Option {} set to {} from command line".format(arg,args[a+1]))
     # create the output dir
     subprocess.run(['mkdir','-p',opt['PATH_OUTPUT']])
+
     #############################################
     ### GATHER INFO ON PRF MODELS and FRAMES  ###  
-    
+
     modelfile = opt['PATH_PRFMOD']+opt['FILE_PRFMOD']
-    prfmap = ascii.read(modelfile,format='ipac') #(PRFNum NAXIS1 NAXIS2 PRFPos1 PRFPos2)
+    prfmod = ascii.read(modelfile,format='ipac') #(PRFNum NAXIS1 NAXIS2 PRFPos1 PRFPos2)
     # file names are in the header but for some reason astropy doesnt read the meta values as it should
     # thus, a dirty trick is used
     # \char PRF_Filename_1 =  apex_sh_IRAC1_col025_row025_x100.fits
@@ -60,7 +63,6 @@ if __name__ == '__main__':
     ymax_mod = fin.readline().split()[-1]
     f_mod = []
     for i in range(n_mod): f_mod.append(fin.readline().split()[-1])
-    
     # list of frames to analyse
     frame_list = np.loadtxt(opt['FILE_FRAMELIST'],comments="#",dtype='str')
     nam = []  #only the file names
@@ -71,17 +73,22 @@ if __name__ == '__main__':
     opt['NAME_FRAME'] = [f[:f.find('_bcd.fits')] for f in nam]
     
     
-    
-    # Step 1: MAKE THE GRID OVER THE ENTIRE MOSAIC 
+    ###############
+    ###  TASKS  ###
+
+    #Step 1: MAKE THE GRID OVER THE ENTIRE MOSAIC 
     # (or a sub-region, if RA_LIM and DEC_LIM are set in the config file)
-    if task=='grid':  draw_grid(frame_list,opt=opt,verbose=verbose,debug=debug)
-    
-    #Step 2: 
-    if task=='models':  find_models(frame_list,prfmap,opt=opt,verbose=verbose,debug=debug,parallel=prll)
-
-    #Step 3:
-    
-    if task=='stack': 
+    if task=='grid':  
+        draw_grid(frame_list,opt=opt,verbose=verbose,debug=debug)
+    #Step 2:  CREATE A LIST WITH INDIVIDUAL PRFs IN EACH GRID POINT
+    # for every frame overlapping on any grid point
+    elif task=='models':  
+        find_models(frame_list,prfmod,opt=opt,verbose=verbose,debug=debug,parallel=prll)
+    #Step 3:  STACK THE INDIVIDUAL PRFs
+    # (use `id_list` to specify a sub-sample of grid points where to stack)
+    elif task=='stack': 
         rotate_and_stack(f_mod,opt=opt,id_list=[],parallel=prll,verbose=verbose)
-
+    #Wrong task in input
+    else:
+        sys.exit("ERROR: task '{}' does not exist".format(task))
 

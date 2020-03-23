@@ -8,7 +8,7 @@ PATH_OUTPUT prfout_test  #the directory where the output will be saved
 FILE_MOSAIC example_data/mosaic/A2744.0.irac.1.mosaic.fits   #the IRAC mosaic to be mapped
 FILE_FRAMELIST example_data/frames.lst   #frames that made the mosaic (list of *_bcd.fits file)
 FILE_PRFMOD  ch1_prfmap_x10.tbl   #table (from the IPAC website) with the carachteristics of the basic models (must be located in PATH_PRFMOD)
-FILE_GRID TBD    #grid where to evaluate the PRF (it can be created 'by hand' by the user)
+FILE_GRID  A2744_irac_ch1.txt    #grid where to evaluate the PRF (it can be created 'by hand' by the user)
 FILE_PRFS  prfout_test/prfmap_models_ch1.txt   #list of all frames associated to every grid point
 
 ### PRF details

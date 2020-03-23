@@ -89,10 +89,6 @@ def find_models(frame_list,prfmap,opt={},debug=False,verbose=False,parallel=Fals
             proc.append( mp.Process(target=multi_frame,args=(fnames,points,(prfmap['PRFPos1'],prfmap['PRFPos2']),verbose,output)) )
             nproc += 1
         if verbose: print('--- There are {} frames split into {} cores for parallel run'.format(nfram,nproc))
-        #fnames = frame_list[b:b+nchunk]
-        #output = output0.format(opt['PATH_OUTPUT'],nproc)
-        #proc.append( mp.Process(target=multi_frame,args=(fnames,points,(prfmap['PRFPos1'],prfmap['PRFPos2']),verbose,output)) )
-        #nproc += 1
  
         for p in proc:  p.start()
         for p in proc:  p.join()
@@ -111,6 +107,6 @@ def find_models(frame_list,prfmap,opt={},debug=False,verbose=False,parallel=Fals
             rows = single_frame(fname,points,(prfmap['PRFPos1'],prfmap['PRFPos2']),verbose=verbose)
             for r in rows:
                 fout.write('{:9d} {:6d} {:11.6f} {:11.6f} {:9.4f}  {}\n'.format(r[0],r[1],r[2],r[3],r[4],r[5]))
-    if verbose: print('--- LIST OF PRF MODELS CORRECTLY ORIENTED --- \n--- located in {}'.format(filename))
+    if verbose: print('--- PRF models correctly oriented --- \n--- are listed in {}'.format(filename))
 
 

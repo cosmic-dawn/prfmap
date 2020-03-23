@@ -22,9 +22,9 @@ def draw_grid(frame_list,opt={},verbose=False,debug=False):
 
     """
 
-    if verbose: print('--- MAKE THE GRID OVER THE ENTIRE MOSAIC ---\n--- located in {} '.format(opt['FILE_MOSAIC']))
+    if verbose: print('--- Make the grid over the entire mosaic ---\n--- which is {} '.format(opt['FILE_MOSAIC']))
 
-    points = make_grids.make_grid(opt['FILE_MOSAIC'],step=opt['PRF_RAD']*opt['GRID_SPACE'],ra_lim=opt['RA_LIM'],dec_lim=opt['DEC_LIM'],write='{}/{}_GRID.dat'.format(opt['PATH_OUTPUT'],opt['NAME_MOSAIC']))
+    points = make_grids.make_grid(opt['FILE_MOSAIC'],step=opt['PRF_RAD']*opt['GRID_SPACE'],ra_lim=opt['RA_LIM'],dec_lim=opt['DEC_LIM'],write='{}/{}'.format(opt['PATH_OUTPUT'],opt['FILE_GRID']))
     ### select the grid points within each frame
     if debug:
         for f,fname in enumerate(frame_list):
@@ -34,6 +34,8 @@ def draw_grid(frame_list,opt={},verbose=False,debug=False):
             subprocess.run(['mkdir','-p','{}/frame_grids/'.format(opt['PATH_OUTPUT'])])
             points1.write('{}/{}_GRID.dat'.format(opt['PATH_OUTPUT']+'/frame_grids/',opt['NAME_FRAME'][f]),format='ascii.commented_header',formats={'ID_GRIDPT':'%8g','RA':'%12.6f','Dec':'%12.6f','X':'%12.3f','Y':'%12.3f'},overwrite=False)  
         
-    if verbose: print('--- OUPUT FILE WITH LIST OF GRID POINTS ---\n--- located in {} '.format('{}/{}_GRID.dat'.format(opt['PATH_OUTPUT'],opt['NAME_MOSAIC'])))
+    if verbose: print('--- Ouput file with list of grid points ---\n--- is located in {} '.format('{}/{}'.format(opt['PATH_OUTPUT'],opt['FILE_GRID'])))
 
+    if debug:
+        print("Print a DS9 .reg file --> TBD")
 
