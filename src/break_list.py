@@ -26,7 +26,7 @@ if __name__ == '__main__':
                    """)
             sys.exit()
         else:
-            sys.exit("Incorrect option")
+            sys.exit("Incorrect syntax. Use -h to print list of options.")
     for a,arg in enumerate(args):  
         if arg in read_par(paramfile,list_out=True):
             fopt[arg] = args[a+1]
@@ -36,7 +36,7 @@ if __name__ == '__main__':
     
     # original list
     
-    lgp = ascii.read(fopt['PATH_OUTPUT']+fopt['FILE_MOSAIC'][fopt['FILE_MOSAIC'].rfind('/'):].replace('.fits','_GRID.dat'))
+    lgp = ascii.read(fopt['FILE_GRID'])
     # create the new sub-lists
     lof = [] #list of output files (ie, the sub-lists)
     for i in range(pcs):

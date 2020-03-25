@@ -3,7 +3,7 @@
 def read_par(paramfile,list_out=False):
 
     # These are the parameter names should be included in that file:
-    keywords = ('PATH_PRFMOD','PATH_OUTPUT','FILE_MOSAIC','FILE_PRFMOD','FILE_FRAMELIST','FILE_GRID','FILE_PRFS','PRF_RAD','GRID_SPACE','PRF_SAMP','RA_LIM','DEC_LIM')
+    keywords = ('PATH_OUTPUT','FILE_MOSAIC','FILE_PRFMOD','FILE_FRAMELIST','FILE_GRID','FILE_PRFS','PRF_RAD','GRID_SPACE','PRF_SAMP','RA_LIM','DEC_LIM')
     if list_out:
         return keywords
     optpar = 2 #number of optinal parameters (to be added at the end of tuple `keywords`)

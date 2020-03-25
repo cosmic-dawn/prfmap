@@ -17,14 +17,14 @@ def draw_grid(frame_list,opt={},verbose=False,debug=False):
         verbose: bool
             print on screen additional information
         debug: bool
-            if True, a folder ./frame_grids/ is created and individual grid for each frame 
-            are saved in *_GRID.dat ASCII files
+            if True, a sub-folder $PATH_OUTPUT/frame_grids/ is created and the individual grid for each frame 
+            is saved in *_GRID.dat ASCII files
 
     """
 
     if verbose: print('--- Make the grid over the entire mosaic ---\n--- which is {} '.format(opt['FILE_MOSAIC']))
 
-    points = utl.make_grid(opt['FILE_MOSAIC'],step=opt['PRF_RAD']*opt['GRID_SPACE'],ra_lim=opt['RA_LIM'],dec_lim=opt['DEC_LIM'],write='{}/{}'.format(opt['PATH_OUTPUT'],opt['FILE_GRID']))
+    points = utl.make_grid(opt['FILE_MOSAIC'],step=opt['PRF_RAD']*opt['GRID_SPACE'],ra_lim=opt['RA_LIM'],dec_lim=opt['DEC_LIM'],write='{}'.format(opt['FILE_GRID']))
     ### select the grid points within each frame
     if debug:
         for f,fname in enumerate(frame_list):
@@ -34,7 +34,7 @@ def draw_grid(frame_list,opt={},verbose=False,debug=False):
             subprocess.run(['mkdir','-p','{}/frame_grids/'.format(opt['PATH_OUTPUT'])])
             points1.write('{}/{}_GRID.dat'.format(opt['PATH_OUTPUT']+'/frame_grids/',opt['NAME_FRAME'][f]),format='ascii.commented_header',formats={'ID_GRIDPT':'%8g','RA':'%12.6f','Dec':'%12.6f','X':'%12.3f','Y':'%12.3f'},overwrite=False)  
         
-    if verbose: print('--- Ouput file with list of grid points ---\n--- is located in {} '.format('{}/{}'.format(opt['PATH_OUTPUT'],opt['FILE_GRID'])))
+    if verbose: print('--- Ouput file with list of grid points ---\n--- is located in {} '.format('{}/{}'.format(opt['FILE_GRID'])))
 
     if debug:
         print("Print a DS9 .reg file --> TBD")

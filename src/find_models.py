@@ -8,9 +8,10 @@ import multiprocessing as mp
 from pathlib import Path
 
 #global 
+# this are the column names of FILE_PRFS
 colnames = ['ID_GRIDPT','PRF_NUMBER','RA_CEN','DEC_CEN','PA','FRAME']
 
-# need this because np.argmin breaks in multiprocessing (don't know why)
+# need this because np.argmin breaks in multiprocessing (why?)
 def argmin(a):
     return min(range(len(a)), key=lambda x: a[x])
 
@@ -64,9 +65,9 @@ def find_models(frame_list,prfmap,opt={},debug=False,verbose=False,parallel=Fals
      rotation angle = PRF orientation as the PA of the given frame  
     """
     if verbose: 
-        modelfile = opt['PATH_PRFMOD']+opt['FILE_PRFMOD']
-        print('--- SELECT PRF MODELS --- \n--- originary in {} \n--- and listed in {}/{}_GRID.dat'.format(modelfile,opt['PATH_OUTPUT'],opt['NAME_MOSAIC']))
-    points = ascii.read('{}/{}_GRID.dat'.format(opt['PATH_OUTPUT'],opt['NAME_MOSAIC']))
+        modelfile = opt['FILE_PRFMOD']
+        print('--- SELECT PRF MODELS --- \n--- originary in {} \n--- and now re-arranged in {}'.format(modelfile,opt['FILE_GRID']))
+    points = ascii.read(opt['FILE_GRID'])
     filename = '{}'.format(opt['FILE_PRFS'])
     if Path(filename).is_file(): sys.exit('--- ERROR: file exists ({}) '.format(filename))
     fout = open(filename,'w')

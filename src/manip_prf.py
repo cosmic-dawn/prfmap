@@ -54,11 +54,10 @@ def rotate_and_stack(models,opt={},id_list=[],parallel=False,verbose=False):
         paths : list
 
     """
-    #Two paths are needed. The first is the location of the input PRF models (PATH_PRFMOD)
-    #while the second is the output directory (PATH_OUTPUT or any other place where results
-    #can be saved).
+    #The path needed is the output directory (PATH_OUTPUT) 
     filein = opt['FILE_PRFS']
-    paths=[opt['PATH_PRFMOD'],opt['PATH_OUTPUT']]
+    cut = opt['FILE_PRFMOD'].rfind('/')  #extract the path to the basic PRF models provided by IPAC
+    paths=[opt['FILE_PRFMOD'][::cut+1],opt['PATH_OUTPUT']]
     #dat = utl.read_fits(filein,hdu=1)
     dat = ascii.read(filein)
     dat['FILENAME'] = [models[i-1] for i in dat['PRF_NUMBER']]
@@ -80,7 +79,7 @@ def rotate_and_stack(models,opt={},id_list=[],parallel=False,verbose=False):
     else:
         if verbose: print('Single thread (parallel=False)')
         #TBRemoved:
-        for igp in id_list[::-1]:
+        for igp in id_list:
             stack_at_gp(igp,dat,paths)
     if verbose: print('results are stored in ',paths[1])
 

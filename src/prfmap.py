@@ -3,7 +3,6 @@ import numpy as np
 import subprocess
 from astropy.io import ascii
 import utils as utl
-import make_grids
 from read_par import read_par
 from draw_grid import draw_grid
 from find_models import find_models
@@ -50,7 +49,7 @@ if __name__ == '__main__':
     #############################################
     ### GATHER INFO ON PRF MODELS and FRAMES  ###  
 
-    modelfile = opt['PATH_PRFMOD']+opt['FILE_PRFMOD']
+    modelfile = opt['FILE_PRFMOD']
     prfmod = ascii.read(modelfile,format='ipac') #(PRFNum NAXIS1 NAXIS2 PRFPos1 PRFPos2)
     # file names are in the header but for some reason astropy doesnt read the meta values as it should
     # thus, a dirty trick is used
