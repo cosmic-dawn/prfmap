@@ -1,6 +1,6 @@
 # PRFMap v2.0
-Pythonic version of PRFMap, with also several changes in the intimate structure of the code. 
-The original PRFMap was developed by Andreas Faisst (afaisst@ipac.caltech.edu) and Peter Capak. The program creates a set of FITS files modelling the Spizter/IRAC Point Response Function (PRF) at different positions of an IRAC mosaic.
+Pythonic version of PRFMap, also including several changes in the intimate structure of the code. 
+The original PRFMap was developed by Andreas Faisst (afaisst@ipac.caltech.edu) and Peter Capak. The program creates a set of FITS files modelling the Spizter/IRAC Point Response Function (PRF) at different positions across an IRAC mosaic.
 
 **PRFMap in a nutshell**. The code creates a grid of points across an IRAC mosaic (provided in input as FITS image). For each point, it finds the overlapping frames (i.e., the observing blocks) that contributed to the mosaic. PRFMap creates a specific PRF model for each of those frames, as the IRAC PRF is *not* rotationally symmetric and it does depend on the orientation of the frame (its Position Angle, PA). All these PRFs are stackeded and the result is the PRF profile of the mosaic at that location.  
 
@@ -19,7 +19,7 @@ The original PRFMap was developed by Andreas Faisst (afaisst@ipac.caltech.edu) a
 Besides the python scripts in the `src/` folder, one has to populate the `prfmod/` folder, which should contain the basic PRF models of the IRAC camera, which have been characterized as a function of the IRAC channel (from 1 to 4) and the position orelative to the detector (i.e., the PRF at the center of a frame is different from the corner). These **basic models** can be downloaded from [the IPAC website](https://irsa.ipac.caltech.edu/data/SPITZER/docs/irac/calibrationfiles/psfprf/).  
 
 ## How it works
-If you prefer to learn by examples, go to the section **Test run**. The main program is `prfmap.py` and is executed as a python script via command line. It has several functionalities ("tasks") that can be specified with the corresponding argument right after the script name (see below). It also requires a **configuration file** where the most important parameters are specified. The list of functionalities and options that can be printed out with the command `python src/prfmap.py -h`. Note that all the example codes are in a bash shell assuming that the present working directory is the one where you cloned/installed the PRFMAPv2 package. 
+If you prefer to learn by examples, go to the **Test run** section below. The main program is `prfmap.py` and is executed as a python script via command line. It has several functionalities ("tasks") that can be specified with the corresponding argument right after the script name (see below). It also requires a **configuration file** where the most important parameters are specified. The list of functionalities and options that can be printed out with the command `python src/prfmap.py -h`. Note that all the example codes are in a bash shell assuming that the present working directory is the one where you cloned/installed the PRFMAPv2 package. 
 
 ### The configuration file
 It is compulsory to specify the location of the configuration file through the `-c` or `--config` option:
@@ -32,15 +32,14 @@ where `task` can be any of the tasks decribed in the following. To have an examp
 ## Input config file for PRFMap v2.0 ##
 
 ### paths to useful directories
-PATH_PRFMOD  prfmod/cryo  #the directory where the basic PRF models are stored
 PATH_OUTPUT prfout_test  #the directory where the output will be saved
 
 ### file names
 FILE_MOSAIC example_data/mosaic/A2744.0.irac.1.mosaic.fits   #the IRAC mosaic to be mapped
 FILE_FRAMELIST example_data/frames.lst   #frames that made the mosaic (list of *_bcd.fits file)
-FILE_PRFMOD  ch1_prfmap_x10.tbl   #table (from the IPAC website) with the carachteristics of the basic models (must be located in PATH_PRFMOD)
-FILE_GRID TBD    #grid where to evaluate the PRF (it can be created 'by hand' by the user)
-FILE_PRFS  prfout_test/prfmap_models_ch1.txt   #list of all frames associated to every grid point
+FILE_PRFMOD  ch1_prfmap_x10.tbl   #full path to the table (downloaded from the IPAC website) with the carachteristics of the basic models (must be located in the directory where the basic PRF models are stored)
+FILE_GRID prfout_test/map_prf_grid.txt    #full path to grid file indicating where to evaluate the PRF 
+FILE_PRFS  prfout_test/prfmap_models_ch1.txt   #full path to file listing all frames associated to every grid point
 
 ### PRF details
 PRF_RAD  8   # core of the PRF (in mosaic's pixels)
@@ -63,3 +62,5 @@ PRF_SAMP 100  # (over-)sampling of the basic PRF models listed in FILE_PRFMOD
 ```bash
 $ python src/prfmap.py grid -c example.par
 ```
+
+## Test run
