@@ -19,7 +19,7 @@ def stack_at_gp(igp,dat,paths):
     sel_frames = np.where(dat['ID_GRIDPT']==igp)
     if len(sel_frames[0])==0: return
     #avoid overwriting
-    if os.path.isfile('{}/mosaic_gp{:05d}.fits'.format(paths[1],igp)): return
+    if os.path.isfile('{}/mosaic_gp{:06d}.fits'.format(paths[1],igp)): return
     i0 = sel_frames[0][0]
     #copy header from the first PRF
     stack_hdr = utl.read_fits_head(paths[0]+dat['FILENAME'][i0])
@@ -37,7 +37,7 @@ def stack_at_gp(igp,dat,paths):
     new_hdu.header['RA_PT'] = dat['RA_CEN'][i0]
     new_hdu.header['DEC_PT'] = dat['DEC_CEN'][i0]
     new_hdu.header['NFRAMES'] = len(sel_frames[0])
-    new_hdu.writeto('{}/mosaic_gp{:05d}.fits'.format(paths[1],igp))
+    new_hdu.writeto('{}/mosaic_gp{:06d}.fits'.format(paths[1],igp))
     return
 
 def worker(ids,dat,paths):
@@ -57,7 +57,7 @@ def rotate_and_stack(models,opt={},id_list=[],parallel=False,verbose=False):
     #The path needed is the output directory (PATH_OUTPUT) 
     filein = opt['FILE_PRFS']
     cut = opt['FILE_PRFMOD'].rfind('/')  #extract the path to the basic PRF models provided by IPAC
-    paths=[opt['FILE_PRFMOD'][::cut+1],opt['PATH_OUTPUT']]
+    paths=[opt['FILE_PRFMOD'][:cut+1],opt['PATH_OUTPUT']]
     #dat = utl.read_fits(filein,hdu=1)
     dat = ascii.read(filein)
     dat['FILENAME'] = [models[i-1] for i in dat['PRF_NUMBER']]

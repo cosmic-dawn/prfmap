@@ -60,8 +60,12 @@ if __name__ == '__main__':
     n_mod = int(n_mod)
     xmax_mod = fin.readline().split()[-1]
     ymax_mod = fin.readline().split()[-1]
+    if debug: print('----- The basic PRF models are:')
     f_mod = []
-    for i in range(n_mod): f_mod.append(fin.readline().split()[-1])
+    for i in range(n_mod): 
+        f_mod.append(fin.readline().split()[-1])
+        if debug: print(f_mod[i])
+    if debug: print('----- ')
     # list of frames to analyse
     frame_list = np.loadtxt(opt['FILE_FRAMELIST'],comments="#",dtype='str')
     nam = []  #only the file names

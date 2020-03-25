@@ -66,7 +66,7 @@ def find_models(frame_list,prfmap,opt={},debug=False,verbose=False,parallel=Fals
     """
     if verbose: 
         modelfile = opt['FILE_PRFMOD']
-        print('--- SELECT PRF MODELS --- \n--- originary in {} \n--- and now re-arranged in {}'.format(modelfile,opt['FILE_GRID']))
+        print('--- Select PRF models  \n--- originary in {} \n--- and now re-arranged in {} ---'.format(modelfile,opt['FILE_GRID']))
     points = ascii.read(opt['FILE_GRID'])
     filename = '{}'.format(opt['FILE_PRFS'])
     if Path(filename).is_file(): sys.exit('--- ERROR: file exists ({}) '.format(filename))
@@ -107,6 +107,6 @@ def find_models(frame_list,prfmap,opt={},debug=False,verbose=False,parallel=Fals
             rows = single_frame(fname,points,(prfmap['PRFPos1'],prfmap['PRFPos2']),verbose=verbose)
             for r in rows:
                 fout.write('{:9d} {:6d} {:11.6f} {:11.6f} {:9.4f}  {}\n'.format(r[0],r[1],r[2],r[3],r[4],r[5]))
-    if verbose: print('--- PRF models correctly oriented --- \n--- are listed in {}'.format(filename))
+    if verbose: print('--- The PRF models correctly oriented  \n--- are described in {} ---'.format(filename))
 
 
