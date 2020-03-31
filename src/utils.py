@@ -16,6 +16,10 @@ def read_fits_head(filename,hdu=0):
     hdul.close()
     return hdr
 
+def read_ascii_head(filename):
+    """read a FITS header already extracted into an ASCII file"""
+    return "TBD"   
+
 def xy_to_sky(img_hdr,x,y,start=1):
     """convert a set of points from pxl coordinates to RA,Dec 
        using a FITS header to extract WCS info."""
@@ -33,7 +37,10 @@ def sky_to_xy(img_hdr,ra,dec,start=1):
 def make_grid(filename,step=8,ra_lim=[],dec_lim=[],hdu=0,write=False):
     """Given a FITS image, create a grid spanning the entire area
     with a given `step` in pixels"""
-    hdr = read_fits_head(filename,hdu=hdu)
+    if filename[-5:]=='.fits':
+        hdr = read_fits_head(filename,hdu=hdu)
+    else:
+        hdr = read_ascii_head(filename)
     xmax = hdr['NAXIS1']
     ymax = hdr['NAXIS2']
     box_pxl = [(1,1), (1,xmax), (xmax,ymax), (1,ymax)]
@@ -74,7 +81,10 @@ def make_grid(filename,step=8,ra_lim=[],dec_lim=[],hdu=0,write=False):
 def grid_in_frame(points,fname):
     """take the list of all the grid points and select those inside the given frame"""
     # find which grid points are within this frame
-    frame_hdr = read_fits_head(fname)
+    if fname[-5:] == '.fits':
+        frame_hdr = read_fits_head(fname)
+    else:
+        frame_hdr = read_ascii_head(fnam)
     type = frame_hdr['BITPIX']
     edges_xy = np.array([ (1,1), (1,frame_hdr['NAXIS1']), (frame_hdr['NAXIS2'],1), (frame_hdr['NAXIS2'],frame_hdr['NAXIS1'])])
     edges_sky = xy_to_sky(frame_hdr,x=edges_xy[:,0],y=edges_xy[:,1]) 

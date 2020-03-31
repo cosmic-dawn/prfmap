@@ -18,7 +18,7 @@ def draw_grid(frame_list,opt={},verbose=False,debug=False):
             print on screen additional information
         debug: bool
             if True, a sub-folder $PATH_OUTPUT/frame_grids/ is created and the individual grid for each frame 
-            is saved in *_GRID.dat ASCII files
+            is saved in *_GRID.dat ASCII files. 
 
     """
 

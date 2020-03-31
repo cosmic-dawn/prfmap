@@ -26,7 +26,10 @@ def single_frame(fname,points,coord,verbose):
         # simple Euclidean distance; k-tree should be faster for findinf the nearest neighbor model
         dist = (x-x0)**2 + (y-y0)**2  #this is the squared distance
         i0 = argmin(dist.data)   # nearest model to grid point i (np.argmin doesnt work in parallel!)
-        pa = utl.read_fits_head(fname)['PA']  #rotation
+        if fname[-5:]=='.fits':
+            pa = utl.read_fits_head(fname)['PA']  #rotation
+        else:
+            pa = utl.read_ascii_head(fname)['PA']
         rows.append( [points1['ID_GRIDPT'][i],i0+1,points1['RA'][i],points1['Dec'][i],pa,fname[fname.rfind('/')+1:]] )
     if verbose: print('--- Inspected frame {} ---'.format(fname))
     return rows  
@@ -43,7 +46,10 @@ def multi_frame(fnames,points,coord,verbose,queue):
             # simple Euclidean distance; k-tree should be faster for findinf the nearest neighbor model
             dist = (x-x0)**2 + (y-y0)**2  #this is the squared distance
             i0 = argmin(dist.data)   # nearest model to grid point i (np.argmin doesnt work in parallel!)
-            pa = utl.read_fits_head(fname)['PA']  #rotation
+            if fname[-5:]=='.fits':
+                pa = utl.read_fits_head(fname)['PA']  #rotation
+            else:
+                pa = utl.read_ascii_head(fname)['PA']
             out_tmp.write('{:9d} {:6d} {:11.6f} {:11.6f} {:9.4f}  {}\n'.format( points1['ID_GRIDPT'][i],i0+1,points1['RA'][i],points1['Dec'][i],pa,fname[fname.rfind('/')+1:] ))
         #if verbose: print('--- Inspected frame {} ---'.format(fname))
     out_tmp.close()
