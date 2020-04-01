@@ -51,6 +51,7 @@ PRF_SAMP 100  # (over-)sampling of the basic PRF models listed in FILE_PRFMOD
 #DEC_LIM  1.38,3.08    #min and max Dec of the grid
 ```
 
+Please note that any of the input FITS frames listed in FILE_FRAMELIST, or FILE_MOSAIC, can be replaced by an ASCII file containing the FITS header. When the file name does not end with '.fits', PRFMAP assumes it is a header-only ASCII file. 
 ### Other options
  - `-v` or `--verbose`: print out comments while running
  - `-d` or `--debug`: save additional files for sanity checks
