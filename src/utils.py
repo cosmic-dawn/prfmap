@@ -18,7 +18,9 @@ def read_fits_head(filename,hdu=0):
 
 def read_ascii_head(filename):
     """read a FITS header already extracted into an ASCII file"""
-    return "TBD"   
+    f = open(filename,'r')
+    s = f.read()
+    return fits.Header.fromstring(s,sep='\n')
 
 def xy_to_sky(img_hdr,x,y,start=1):
     """convert a set of points from pxl coordinates to RA,Dec 
