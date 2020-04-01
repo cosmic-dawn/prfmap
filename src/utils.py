@@ -20,6 +20,7 @@ def read_ascii_head(filename):
     """read a FITS header already extracted into an ASCII file"""
     f = open(filename,'r')
     s = f.read()
+    f.close()
     return fits.Header.fromstring(s,sep='\n')
 
 def xy_to_sky(img_hdr,x,y,start=1):
