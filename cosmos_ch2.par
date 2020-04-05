@@ -1,14 +1,13 @@
 # Input config file for PRFMAP v2.0
 
 # paths to useful directories
-PATH_PRFMOD  /n07data/PRFMAP_v2/prfmod/warm/
 PATH_OUTPUT /n08data/PRFstacks/COSMOS_ch2_200319/
 
 # file names
 FILE_MOSAIC  /n07data/Spitzer/COSMOS/COSMOS.irac.2.mosaic.fits 
-FILE_FRAMELIST /n08data/PRFstacks/COSMOS_ch2_200319/bcd_ch2.lst
-FILE_PRFMOD  ch2_prfmap_x100.tbl   #path is defined in PATH_PRFMOD
-FILE_GRID TBD
+FILE_FRAMELIST /n08data/PRFstacks/cosmos_ch2_bcd.lst
+FILE_PRFMOD  /n07data/PRFMAP_v2/prfmod/warm/ch2_prfmap_x100.tbl   #path is defined in PATH_PRFMOD
+FILE_GRID /n08data/PRFstacks/COSMOS_ch2_200319/COSMOS.irac.2.mosaic_GRID.dat
 FILE_PRFS /n08data/PRFstacks/COSMOS_ch2_200319/prfmap_models_ch2_48pix.txt
 
 PRF_RAD  8   # core of the PRF (in mosaic's pixels)

@@ -11,16 +11,35 @@ if __name__ == '__main__':
     verbose = False #default value
     debug = False #default value
     prll = False #default value
-    options, args=getopt.getopt(sys.argv[1:],"hvdpc:r:",["help","verbose","debug","parallel","config=","resample="])
+    overwrite = False  #default value
+    options, args=getopt.getopt(sys.argv[1:],"hvdpwc:r:",["help","verbose","debug","parallel","overwrite","config=","resample="])
     for opt, arg in options:
         if opt in ('-r','--resample'): pxl  = float(arg)  #the final image grid in arcsec/pixel units
         if opt in ('-c','--config'):  paramfile = arg
         if opt in ('-v','--verbose'): verbose = True
         if opt in ('-d','--debug'): debug = True
         if opt in ('-p','--parallel'): print('Multi-thread not avilable (yet)')
+        if opt in ('-w','--overwrite'): overwrite = True
         if opt in ('-h','--help'):
             print("""
-        Help message TBD
+        Usage:
+              $ python resample_psf.py -c configfile.par -r 0.6 [-v -d -p -w]
+              $ python resample_psf.py --config configfile.par --resample=0.6 [--verbose --debug --parallel -overwrite]
+              
+              Rescale all the PRF models stored in the directory indicated in the config file ($PATH_OUTPUT/PRFstack/)
+              to the arcsec/pixel value set by the option -r or --resample. The config file must have the PRFMAP v2 format.
+              The output PRFs are FITS files stored in a new directory called e.g. PRFstack_06/, with the suffix depeneding
+              on the rescaling option (in this case 0.6"/pxl). The parent directory is $PATH_OTUPUT as indicated in the
+              PRFMAP config file. 
+              
+        Options: 
+              -c | --config : specify the confi file (PRFMAPv2 format)
+              -r | --resample : specify the grid scale of the output (arcsec/pixel units)
+              -v | --verbose : print more std output
+              -d | --debug : perform additional sanity checks [TBD]
+              -p | --parallel : multi-thread [TBD]
+              -w | --overwrite : write the resampled FITS file even if it is already present in the target directory.
+              -h | --help : print this help page.
                    """)
             sys.exit()
 
@@ -55,7 +74,7 @@ if __name__ == '__main__':
     y0 = x0; y1 = x1 #assuming the PRF cutout is a square (NAXIS1==NAXIS2)
 
     for fits_in in l:
-        if os.path.isfile(dir_out+fits_in):
+        if os.path.isfile(dir_out+fits_in) and not overwrite:
              if verbose: print(dir_out+fits_in,' already exists')
              continue
         prf_in,hdr = fits.getdata(dir_in+fits_in,header=True)
@@ -66,5 +85,5 @@ if __name__ == '__main__':
         hdr['SAMP_NEW'] = opt['PRF_SAMP']*factor
         hdu_new = fits.PrimaryHDU(prf_out,hdr)
         #hdu_new.writeto(dir_out+fits_in.replace('.fits',suff+'.fits'))
-        hdu_new.writeto(dir_out+fits_in)
+        hdu_new.writeto(dir_out+fits_in,overwrite=overwrite)
         
