@@ -11,7 +11,6 @@ if __name__ == '__main__':
     debug = False #default value
     prll = False #default value
     options, args=getopt.getopt(sys.argv[1:],"hvdpc:b:",["help","verbose","debug","parallel","config=","break="])
-    print(options,args)
     for opt, arg in options:
         if opt in ('-b','--break'): pcs  = int(arg)  #number of pieces (ie, sub-lists) to divide the original prf_models list
         elif opt in ('-c','--config'):  
@@ -46,7 +45,8 @@ if __name__ == '__main__':
     for i,idgp in enumerate(lgp['ID_GRIDPT']):
         if (i+1)%bpt==0: break_id.append(idgp)
     break_id[-1] = max(lgp['ID_GRIDPT'])+1
-    print(break_id)
+    if verbose:
+        print('ID numbers where to divide the original list:\n',print(break_id)
     break_id = np.array(break_id)
     with open(fopt['FILE_PRFS'],'r') as filein:
         for l in filein:

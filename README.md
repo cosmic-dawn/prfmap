@@ -71,7 +71,7 @@ The program analyses the geometry of the IRAC mosaic (specified as FITS file `FI
 3.7558042 -30.4465922 25 105 2
 ...
 ```
-See and example in `example_data/comparison_output/map_prf_grid.txt`.
+See and example in `example_data/comparison_output/map_prf_grid.txt`. The match between grid points and IRAC frames is made in WCS, so the RA,Dec coordinates of a hand-made `FILE_GRID` must be correct; X,Y are not used in the process so in principle they can be dummy values like -99.
 The `--debug` option will pring a .reg file to visualize the grid in DS9, and individual grids for each frame in a dedicated sub-folder of the `PATH_OUTPUT` directory. 
 
 ### Task 2: associate frame PRFs to each grid point

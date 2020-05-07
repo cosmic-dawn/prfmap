@@ -62,9 +62,9 @@ def rotate_and_stack(models,opt={},id_list=[],parallel=False,verbose=False):
     dat = ascii.read(filein)
     dat['FILENAME'] = [models[i-1] for i in dat['PRF_NUMBER']]
     ids = dat['ID_GRIDPT'] # all grid points with repetitions (x N_frames)
-    uniq_id = set(ids)
     if len(id_list)==0: 
-        id_list = list(set(uniq_id))
+        id_list = list(set(ids)) # unique IDs
+        id_list.sort(reverse=False)
     nid = len(id_list)
     paths[1] += 'PRFstack/'  
     subprocess.run(['mkdir','-p',paths[1]])  #subdirectory for the stacking result
@@ -78,7 +78,6 @@ def rotate_and_stack(models,opt={},id_list=[],parallel=False,verbose=False):
         pool.close() 
     else:
         if verbose: print('Single thread (parallel=False)')
-        #TBRemoved:
         for igp in id_list:
             stack_at_gp(igp,dat,paths)
     if verbose: print('results are stored in ',paths[1])
