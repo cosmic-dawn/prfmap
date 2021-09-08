@@ -36,7 +36,7 @@ PATH_OUTPUT example_data/prfout_test  #the directory where the output will be sa
 
 ### file names
 FILE_MOSAIC example_data/mosaic/A2744.0.irac.1.mosaic.fits   #the IRAC mosaic to be mapped
-FILE_FRAMELIST example_data/frames.lst   #frames that made the mosaic (list of *_bcd.fits file)
+FILE_FRAMELIST example_data/frames.lst   #frames that made the mosaic (list of *_bcd.fits files)
 FILE_PRFMOD  ch1_prfmap_x10.tbl   #full path to the table (downloaded from the IPAC website) including the basic PRF models (in different detector coordinates). FILE_PRFMOD must be located in the directory where those basic PRF models are stored.
 FILE_GRID example_data/prfout_test/map_prf_grid.txt    #full path to grid file indicating where to evaluate the PRF 
 FILE_PRFS  example_data/prfout_test/prfmap_models_ch1.txt   #full path to file listing all frames associated to every grid point
