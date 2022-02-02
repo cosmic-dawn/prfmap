@@ -46,7 +46,7 @@ if __name__ == '__main__':
         if (i+1)%bpt==0: break_id.append(idgp)
     break_id[-1] = max(lgp['ID_GRIDPT'])+1
     if verbose:
-        print('ID numbers where to divide the original list:\n',print(break_id)
+        print('ID numbers where to divide the original list:\n',break_id)
     break_id = np.array(break_id)
     with open(fopt['FILE_PRFS'],'r') as filein:
         for l in filein:
